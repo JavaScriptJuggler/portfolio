@@ -5,10 +5,8 @@ namespace App\Controller;
 use App\Entity\Portfolio;
 use App\Helper\commonHelper;
 use Doctrine\ORM\EntityManagerInterface;
-use Google_Client;
-use Google_Service_Drive;
-use Google_Service_Drive_DriveFile;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -62,10 +60,17 @@ class PortfolioController extends AbstractController
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
         if ($request->request) {
             $inputs = $request->request->all();
+
             $file = $request->files->get('image');
-            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
-            $file->move($this->getParameter('brochures_directory'), $fileName);
-            $filePath = 'asset/' . $fileName;
+            $fileId = '';
+            if ($file) {
+                if ($file instanceof UploadedFile) {
+                    // Ensure it's a valid file
+                    $content = file_get_contents($file->getPathname());
+                    $mimeType = $file->getMimeType();
+                    $fileId = commonHelper::uploadImage($content, $mimeType);
+                }
+            }
             $checkData = '';
             $checkData = new Portfolio;
             if ($inputs['portfolio_number']) {
@@ -77,7 +82,8 @@ class PortfolioController extends AbstractController
             $checkData->setTechnology($inputs['category']);
             $checkData->setCategory($inputs['technology']);
             $checkData->setSlug($inputs['slug']);
-            $checkData->setImage($filePath);
+            if ($fileId != '')
+                $checkData->setImage($fileId);
             $entityManagerInterface->persist($checkData);
             $entityManagerInterface->flush();
             return $this->redirectToRoute('app_portfolio_list');
@@ -92,29 +98,5 @@ class PortfolioController extends AbstractController
         $entityManagerInterface->remove($record);
         $entityManagerInterface->flush();
         return $this->redirectToRoute('app_portfolio_list');
-    }
-
-    #[Route('/google')]
-    public function googleRedirect(): Response
-    {
-        $result = commonHelper::uploadImage();
-        return new Response($result);
-    }
-    #[Route('/google/auth')]
-    public function googleRedirectAuth(Request $request): Response
-    {
-        $client = new Google_Client();
-        $client->setApplicationName('Your Symfony App');
-        $client->setScopes([Google_Service_Drive::DRIVE]);
-        $client->setClientId('982462715601-0s0id6ht324p71cjedjargtmepu4tr09.apps.googleusercontent.com');
-        $client->setClientSecret('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');
-        $client->setRedirectUri('http://localhost:8000/google/auth');
-        $client->setAccessType('offline'); // Use 'offline' for long-lasting access
-        $accessToken = $client->fetchAccessTokenWithAuthCode($request->query->get('code'));
-        file_put_contents($this->getParameter('kernel.project_dir') . '/public/token.json', json_encode($accessToken));
-        $result = commonHelper::uploadImage();
-        // You can call a helper method or handle the OAuth token exchange logic here
-
-        return new Response('Authorization Callback Completed'); // Replace with appropriate response
     }
 }

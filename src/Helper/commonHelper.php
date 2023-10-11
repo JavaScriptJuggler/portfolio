@@ -5,21 +5,32 @@ namespace App\Helper;
 use Google_Client;
 use Google_Service_Drive;
 use Google_Service_Drive_DriveFile;
+use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Routing\Generator\UrlGenerator;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class commonHelper
 {
-    public static function uploadImage($authCode = '', $mimeType = 'image/png')
+    private $requestStack;
+    private $urlGenerator;
+    public function __construct(RequestStack $requestStack, UrlGeneratorInterface $urlGenerator)
     {
-        $publicDir = realpath(__DIR__ . '../../public');
+        $this->requestStack = $requestStack;
+        $this->urlGenerator = $urlGenerator;
+    }
+
+    public static function uploadImage($file = '', $mimeType = 'image/png')
+    {
         // Initialize the Google API client
         $client = new Google_Client();
-        $client->setApplicationName('Your Symfony App');
+        $client->setApplicationName('Portfolio Website');
         $client->setScopes([Google_Service_Drive::DRIVE]);
-        $client->setClientId('982462715601-0s0id6ht324p71cjedjargtmepu4tr09.apps.googleusercontent.com');
-        $client->setClientSecret('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');
-        $client->setRedirectUri('http://localhost:8000/google/auth');
+        $client->setClientId($_ENV['GOOGLE_DRIVE_CLIENT_ID']);
+        $client->setClientSecret($_ENV['GOOGLE_DRIVE_SECRECT_KEY']);
+        $client->setRedirectUri($_ENV['APPLICATION_URL'] . '/google/auth');
         $client->setAccessType('offline'); // Use 'offline' for long-lasting access
 
         // Check if we have a saved access token
@@ -44,15 +55,15 @@ class commonHelper
         // Upload the image
         $fileMetadata = new Google_Service_Drive_DriveFile([
             'name' => 'testimage.png',
+            'parents' => [$_ENV['GOOGLE_DRIVE_FOLDER_ID']]
         ]);
-        $content = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/favicon.png');
 
         $file = $service->files->create($fileMetadata, [
-            'data' => $content,
+            'data' => $file,
             'mimeType' => $mimeType,
             'uploadType' => 'multipart',
         ]);
 
-        return 'Image uploaded successfully. File ID: ' . $file->id;
+        return $file->id;
     }
 }
