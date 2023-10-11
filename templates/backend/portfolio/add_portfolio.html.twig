@@ -1,0 +1,75 @@
+{% extends 'backend/layout/base.html.twig' %}
+{% block content %}
+	<style>
+		.select2-selection__rendered {
+			line-height: 31px !important;
+		}
+		.select2-container .select2-selection--single {
+			height: 40px !important;
+		}
+		.select2-selection__arrow {
+			height: 39px !important;
+		}
+	</style>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">Portfolio</h5>
+					<p class="card-text">Add portfolio to show on the portfolio website</p>
+					<form action="/administrator/save-portfolio" method="POST" name="portfolio_adder" id="portfolio_adder" enctype="multipart/form-data">
+						<div class="row">
+							<input type="hidden" name="portfolio_number" value='{{portfolio is defined ? portfolio.getId():""}}'>
+							<div class="form-group col-md-12 mb-2">
+								<label for="heading" class="form-label">Heading</label>
+								<input type="text" required name="heading" id="heading" value="{{portfolio is defined? portfolio.getHeading():''}}" class="form-control">
+							</div>
+							<div class="form-group col-md-12 mb-2">
+								<label for="description" class="form-label">Description</label>
+								<textarea name="description" required id="description" value="" class="form-control" rows="3"></textarea>
+							</div>
+							<div class="form-group col-md-12">
+								<label for="" class="form-group mb-2">Image</label>
+								<input type="file" name="image" class="form-control">
+							</div>
+							<div class="form-group col-md-12">
+								<label for="" class="form-group mb-2">Category</label>
+								<input type="text" name="category" value='{{portfolio is defined? portfolio.getCategory():''}}' class="form-control">
+							</div>
+							<div class="form-group col-md-12">
+								<label for="" class="form-group mb-2">Technology</label>
+								<input type="text" name="technology" value='{{portfolio is defined? portfolio.getTechnology():''}}' class="form-control">
+							</div>
+							<div class="form-group col-md-12">
+								<label for="" class="form-label">slug</label>
+								<input type="text" name="slug" required id="slug" value='{{portfolio is defined? portfolio.getSlug():''}}' class="form-control">
+							</div>
+						</div>
+						<div class="col-md-12 text-end mt-3">
+							<button class="btn btn-primary" type="submit" form="portfolio_adder">Save Changes</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	 <script>
+	        $(function () {
+	    });
+	        const portfolioContent = {{ portfolio is defined ? portfolio.getDescription()|json_encode|raw : "''" }};
+	        const editor = Jodit.make('#description',{
+	            "height":300,
+	            "sanitizeHTML": false,
+	        });
+	        editor.setEditorValue(portfolioContent,false);
+	        $('#heading').keyup(function (e) { 
+	            const cleanedSentence = $(this).val()
+	            .toLowerCase()
+	            .replace(/[^\w\s-]/g, '')
+	            .replace(/\s+/g, ' ')
+	            .trim();
+	        const slug = cleanedSentence.replace(/\s+/g, '-');
+	        $("#slug").val(slug)
+	        });
+	    </script>
+{% endblock %}

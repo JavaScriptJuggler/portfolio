@@ -1,0 +1,76 @@
+{% extends 'backend/layout/base.html.twig' %}
+{% block content %}
+	<style>
+		.select2-selection__rendered {
+			line-height: 31px !important;
+		}
+		.select2-container .select2-selection--single {
+			height: 40px !important;
+		}
+		.select2-selection__arrow {
+			height: 39px !important;
+		}
+	</style>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">Blog</h5>
+					<p class="card-text">Add Blog to show on the portfolio website</p>
+					<form action="/administrator/save-blog" method="POST" name="blog_adder" id="blog_adder">
+						<div class="row">
+							<input type="hidden" name="blog_number" value='{{blog is defined ? blog.getId():""}}'>
+							<div class="form-group col-md-12 mb-2">
+								<label for="heading" class="form-label">Heading</label>
+								<input type="text" required name="heading" id="heading" value="{{blog is defined? blog.getBlogHeading():''}}" class="form-control">
+							</div>
+							<div class="form-group col-md-12 mb-2">
+								<label for="description" class="form-label">Description</label>
+								<textarea name="description" required id="description" value="" class="form-control" rows="5"></textarea>
+							</div>
+							<div class="form-group col-md-12">
+								<label for="" class="form-group mb-2">Category</label>
+								<select id="category" required name="category" style="width: 100%;height:50px">
+									<option value="" style="display:none">Select Category</option>
+									{% for category in blogCategories %}
+										<option value="{{category.getCategoryName()}}" {{(blog is defined and blog.getCategoryName()|lower== category.getCategoryName())?'selected':''}}>{{category.getFormatterCaegoryName()}}</option>
+									{% endfor %}
+								</select>
+							</div>
+							<div class="form-group col-md-12">
+								<label for="" class="form-label">slug</label>
+								<input type="text" name="slug" required id="slug" value='{{blog is defined? blog.getSlug():''}}' class="form-control">
+							</div>
+						</div>
+						<div class="col-md-12 text-end mt-3">
+							<button class="btn btn-primary" type="submit" form="blog_adder">Save Changes</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	 <script>
+			$(function () {
+				$('#category').select2({
+				tags: true, // Allows adding new options
+				placeholder: 'Select an option or add a new one',
+			});
+		});
+			const blogContent = {{ blog is defined ? blog.getBlogContent()|json_encode|raw : "''" }};
+			const editor = Jodit.make('#description',{
+				"height":650,
+				"sanitizeHTML": false,
+			});
+			editor.setEditorValue(blogContent,false);
+			$('#heading').keyup(function (e) { 
+				const cleanedSentence = $(this).val()
+				.toLowerCase()
+				.replace(/[^\w\s-]/g, '')
+				.replace(/\s+/g, ' ')
+				.trim();
+			const slug = cleanedSentence.replace(/\s+/g, '-');
+			$("#slug").val(slug)
+			});
+		</script>
+{% endblock %}

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% include 'frontend/partials/head.html.twig' %}
+
+<body>
+
+  <div class="preloader">
+    <div class="dots dot1">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </div>
+<!--================== Header Section Start ==================-->
+{% include 'frontend/partials/header.html.twig' %}
+<!--================== Header Section End ==================-->
+
+{% block content %}{% endblock %}
+    
+
+
+<div class="backtotop">
+  <i class="fas fa-angle-up"></i>
+</div>
+<!--================== Footer Section Start ==================-->
+{% include 'frontend/partials/footer.html.twig' %}
+<!--================== Footer Section End ==================-->
+{% include 'frontend/partials/script.html.twig' %}
+
+</body>
+
+</html>

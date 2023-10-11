@@ -1,0 +1,102 @@
+{% extends 'backend/layout/base.html.twig' %}
+{% block content %}
+	<div class="row">
+		<div class="col-md-12">
+			{% for type, messages in app.flashes %}
+				{% for message in messages %}
+					<div class="alert alert-{{ type }} alert-dismissible fade show mt-2 mb-2">
+						{{ message }}
+						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					</div>
+				{% endfor %}
+			{% endfor %}
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">Experience Phrase</h5>
+					<p class="card-text">Add experience phrase to show on the portfolio website</p>
+					<form action="/administrator/save-experience-phrase" method="POST" name="experienceParse" id="experienceParse">
+						<div class="row">
+							<div class="form-group col-md-4">
+								<label for="heading" class="form-label">Heading</label>
+								<input type="text" name="heading" id="heading" value="{{data.getExperienceHeading()}}" class="form-control">
+							</div>
+							<div class="form-group col-md-4">
+								<label for="description" class="form-label">Description</label>
+								<input type="text" name="description" id="description" value="{{data.getExperienceDescription()}}" class="form-control">
+							</div>
+							<div class="form-group col-md-4">
+								<label for="totalProjects" class="form-label">Total Projects</label>
+								<input type="text" name="totalProjects" id="totalProjects" value="{{data.getTotalProjects()}}" class="form-control">
+							</div>
+						</div>
+						<div class="col-md-12 text-end mt-3">
+							<button class="btn btn-primary" type="submit" form="experienceParse">Save Changes</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="card mt-3">
+				<div class="card-body">
+					<form class="repeater" id="repeater" action="/administrator/save-experience-offices" name="repeater" method="POST" enctype="multipart/form-data">
+						<div class="row mb-4">
+							<div class="col">
+								<h5 class="card-title">Add Experiences</h5>
+								<p class="card-text">Add Experiences to show on the portfolio website</p>
+							</div>
+							<div class="col-auto">
+								<input data-repeater-create type="button" class="btn btn-primary" form="repeater" value="Add Service"/>
+							</div>
+							<div class="col-auto">
+								<button type="submit" class="btn btn-primary" form="repeater">Save Changes</button>
+							</div>
+						</div>
+
+						<div data-repeater-list="group-a">
+							<div data-repeater-item>
+								<div class="row mt-3">
+									<div class="col-md-2">
+										<label for="companyname" class="form-label">Office Name</label>
+										<input type="text" required name="companyname" class="form-control">
+									</div>
+									<div class="col-md-2">
+										<label for="designation" class="form-label">Designation</label>
+										<input type="text" required name="designation" class="form-control">
+									</div>
+									<div class="col-md-2">
+										<label for="years" class="form-label">Years</label>
+										<input type="text" required name="years" class="form-control">
+									</div>
+									<div class="col-md-2">
+										<label for="location" class="form-label">Location</label>
+										<input type="text" required name="location" class="form-control">
+									</div>
+									<div class="col-md-2 align-self-end text-center">
+										<input data-repeater-delete type="button" class="btn btn-danger btn-block" value="Remove"/>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	 <script>
+	 var htmlEncodedJson = '{{ officeDataArr|raw }}';
+	 console.log(htmlEncodedJson);
+			// Initialize the repeater
+			var $repeater= $('.repeater').repeater({
+				show: function () {
+					$(this).slideDown();
+				},
+				hide: function (deleteElement) {
+					if (confirm('Are you sure you want to delete this element?')) {
+						$(this).slideUp(deleteElement);
+					}
+				}
+			});
+		
+			$repeater.setList(JSON.parse(htmlEncodedJson));
+		
+		</script>
+{% endblock %}

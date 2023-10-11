@@ -1,0 +1,54 @@
+{% extends 'backend/layout/base.html.twig' %}
+{% block content %}
+	{% for type, messages in app.flashes %}
+		{% for message in messages %}
+			<div class="alert alert-{{ type }} alert-dismissible fade show">
+				{{ message }}
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+		{% endfor %}
+	{% endfor %}
+	<div class="card">
+		<div class="card-body">
+			<h5 class="card-title">Title & Tagline</h5>
+			<p class="card-text">Add a title and tagline to make your profile or project uniquely memorable and impactful. Make every word count!</p>
+			{{ form_start(titleDescriptionForm,{'attr': {'id': 'form1'}}) }}
+			<div class="form-group">
+				{{ form_label(titleDescriptionForm.title) }}
+				{{ form_widget(titleDescriptionForm.title) }}
+				{{ form_errors(titleDescriptionForm.title) }}
+			</div>
+			<div class="form-group">
+				{{ form_label(titleDescriptionForm.tagline) }}
+				{{ form_widget(titleDescriptionForm.tagline) }}
+				{{ form_errors(titleDescriptionForm.tagline) }}
+			</div>
+			<div class="text-end mt-3">
+				<button type='submit' class="btn btn-primary" form='form1'>Apply</button>
+			</div>
+			{{ form_end(titleDescriptionForm) }}
+		</div>
+	</div>
+	<div class="card">
+		<div class="card-body">
+			<h5 class="card-title">Phrase</h5>
+			<p class="card-text">Add favourite phrase for portfolio</p>
+			{{ form_start(phraseForm,{'attr': {'id': 'form2'}}) }}
+			<div class="form-group">
+				{{ form_label(phraseForm.phrase_name) }}
+				{{ form_widget(phraseForm.phrase_name) }}
+				{{ form_errors(phraseForm.phrase_name) }}
+			</div>
+			<div class="form-group">
+				{{ form_label(phraseForm.phrase_description) }}
+				{{ form_widget(phraseForm.phrase_description) }}
+				{{ form_errors(phraseForm.phrase_description) }}
+			</div>
+			<div class="text-end mt-3">
+				<button type='submit' class="btn btn-primary" form="form2">Apply</button>
+			</div>
+			{{ form_end(phraseForm) }}
+		</div>
+	</div>
+	 <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+{% endblock %}

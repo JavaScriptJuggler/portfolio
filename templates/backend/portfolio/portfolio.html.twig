@@ -1,0 +1,73 @@
+{% extends 'backend/layout/base.html.twig' %}
+{% block content %}
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-body">
+					{% for type, messages in app.flashes %}
+						{% for message in messages %}
+							<div class="alert alert-{{ type }} alert-dismissible fade show">
+								{{ message }}
+								<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+							</div>
+						{% endfor %}
+					{% endfor %}
+					<div class="row mb-4">
+						<div class="col">
+							<h5 class="card-title">Add Portfolio</h5>
+							<p class="card-text">Add Portfolio to show on the portfolio website</p>
+						</div>
+						<div class="col-auto">
+							<a class="btn btn-primary" href="{{path('app_add_portfolio')}}">Add Portfolio</a>
+						</div>
+					</div>
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="col">#</th>
+								<th scope="col">Portfolio Name</th>
+								<th scope="col">Tech Type</th>
+								<th scope="col">Category</th>
+								<th scope="col">Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for key,item in portfolio %}
+								<tr>
+									<th scope="row">{{key+1}}</th>
+									<td>{{item.getHeading()}}</td>
+									<td>{{item.getTechnology()}}</td>
+									<td>{{item.getCategory()}}</td>
+									<td>
+										<a href="{{path('app_add_portfolio',{"portfolio_id":item.getId()})}}" class="btn btn-warning btn-sm">
+											<i class="ti ti-pencil"></i>
+										</a>
+										<a href="{{path('app_delete_portfolio',{"portfolio_id":item.getId()})}}" onclick="deletePortfolio(event,this)" class="btn btn-danger btn-sm">
+											<i class="ti ti-trash"></i>
+										</a>
+									</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	 <script>
+		const deletePortfolio=(event,element)=>{
+			event.preventDefault();
+			Swal.fire({
+				title: '<h3>Want to remove this portfolio ?</h3>',
+				icon: 'info',
+				html:"<p>Once deleted you can't recover this portfolio again !</p>",
+				showCancelButton: true,
+				confirmButtonColor: '#5D87FF',
+				}).then((result) => {
+					if (result.isConfirmed) {
+						window.location.href = $(element).attr('href');
+					}
+				})
+			}
+		</script>
+{% endblock %}

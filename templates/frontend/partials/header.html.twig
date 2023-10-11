@@ -1,0 +1,35 @@
+<header class="navigation border-bottom">
+	<nav class="navbar navbar-expand-lg">
+		<div class="container">
+			<a class="navbar-brand" href="index.html">
+				<i class="far fa-envelope"></i>hellorick.developer
+			</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<i class="fas fa-bars"></i>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav ms-auto mb-lg-0">
+					<li class="nav-item">
+						<a class="nav-link {% if app.request.attributes.get('_route') == 'app_home' %} active {% endif %}" aria-current="page" href="{{ path('app_home') }}">Home</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link @@about {% if app.request.attributes.get('_route') == 'app_about' %} active {% endif %}" href="{{ path('app_about') }}">About</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link @@blog {% if app.request.attributes.get('_route') == 'app_blog' %} active {% endif %}" href="{{ path('app_blog') }}">Blog</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link @@portfolio {% if app.request.attributes.get('_route') == 'app_portfolio' %} active {% endif %}" href="{{ path('app_portfolio') }}">Portfolio</a>
+					</li>
+					{# <li class="nav-item">
+										                        <a class="nav-link btn btn-primary p-2" href="your-download-link-here" download>Download</a>
+										                    </li> #}
+				</ul>
+				<form class="d-block text-center" role="search">
+					<button class="text-capitalize btn btn-outline-primary px-4 py-2">
+						<i class="fa-solid fa-download" style='margin-right: 5px;'></i>Download Resume</button>
+				</form>
+			</div>
+		</div>
+	</nav>
+</header>

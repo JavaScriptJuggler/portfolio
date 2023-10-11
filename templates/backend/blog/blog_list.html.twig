@@ -1,0 +1,67 @@
+{% extends 'backend/layout/base.html.twig' %}
+{% block content %}
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-body">
+					<div class="row mb-4">
+						<div class="col">
+							<h5 class="card-title">Add Services</h5>
+							<p class="card-text">Add Services to show on the portfolio website</p>
+						</div>
+						<div class="col-auto">
+							<a class="btn btn-primary" href="{{path('app_blog_add')}}">Add Blog</a>
+						</div>
+					</div>
+					<table class="table">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Blog Name</th>
+								<th>Slug</th>
+								<th>Publishing Date</th>
+								<th>Category</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for key,blog in blogs %}
+								<tr>
+									<td>{{key+1}}</td>
+									<td>{{blog.getBlogHeading()}}</td>
+									<td>{{blog.getSlug()}}</td>
+									<td>{{blog.getDate()}}</td>
+									<td>{{blog.getCategoryName()}}</td>
+									<td>
+										<a class="btn btn-warning btn-sm" href="{{path('app_blog_add',{'blog_id':blog.getId()})}}">
+											<i class="ti ti-pencil"></i>
+										</a>
+										<a class="btn btn-danger btn-sm" href="{{path('app_blog_delete',{'blog_id':blog.getId()})}}" onclick="delete_blog(event,this)" id="delete_blog{{key}}">
+											<i class="ti ti-trash"></i>
+										</a>
+									</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	 <script>
+			const delete_blog=(e,element)=>{
+				e.preventDefault();
+				Swal.fire({
+					title: '<h3>Want to remove this blog ?</h3>',
+					icon: 'info',
+					html:"<p>Once deleted you cannot recover this blog again !</p>",
+					showCancelButton: true,
+					confirmButtonColor: '#5D87FF',
+					}).then((result) => {
+						if (result.isConfirmed) {
+							window.location.href = $(element).attr('href');
+						}
+					})
+				}
+			</script>
+{% endblock %}
