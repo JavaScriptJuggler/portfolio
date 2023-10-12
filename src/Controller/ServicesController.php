@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ServicesController extends AbstractController
+class ServicesController extends GlobalController
 {
     #[Route('/administrator/services', name: 'app_services')]
     public function index(EntityManagerInterface $entityManager): Response

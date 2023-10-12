@@ -10,10 +10,11 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class ProfileController extends AbstractController
+class ProfileController extends GlobalController
 {
     private $entityManager;
     public function __construct(EntityManagerInterface $entityManager)
@@ -60,14 +61,21 @@ class ProfileController extends AbstractController
         $requests = $request->request;
         $file = $request->files->get('image');
         $fileName = md5(uniqid()) . '.' . $file->guessExtension();
-        $file->move($this->getParameter('brochures_directory'), $fileName);
-        $filePath = 'asset/' . $fileName;
-        // $student->setPhoto($fileName);
+        $fileId = '';
+        if ($file) {
+            if ($file instanceof UploadedFile) {
+                // Ensure it's a valid file
+
+                $content = file_get_contents($file->getPathname());
+                $mimeType = $file->getMimeType();
+                $fileId = $this->uplaodFileToDrive($content, $mimeType, $fileName, $this->getUser()->getImage() ?? '');
+            }
+        }
         $entityManager = $doctrine->getManager();
         $user = $entityManager->getRepository(User::class)->find($this->getUser()->getId());
         $user->setEmail($requests->get('email'));
         $user->setName($requests->get('name'));
-        $user->setImage($filePath);
+        $user->setImage($fileId);
         $this->entityManager->persist($user);
         $this->entityManager->flush();
         // return $this->redirect($this->generateUrl('app_profile'));

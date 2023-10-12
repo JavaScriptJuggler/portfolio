@@ -7,11 +7,14 @@ use App\Helper\commonHelper;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class PortfolioController extends AbstractController
+class PortfolioController extends GlobalController
 {
     #[Route('/portfolio', name: 'app_portfolio')]
     public function index(): Response
@@ -62,19 +65,20 @@ class PortfolioController extends AbstractController
             $inputs = $request->request->all();
 
             $file = $request->files->get('image');
-            $fileId = '';
+            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+            $fileId = $checkData = $existingFileName = '';
+            $checkData = new Portfolio;
+            if ($inputs['portfolio_number']) {
+                $checkData = $entityManagerInterface->getRepository(Portfolio::class)->findOneBy(['user_id' => $this->getUser()->getId(), 'id' => $inputs['portfolio_number']]);
+                $existingFileName = $checkData->getImage();
+            }
             if ($file) {
                 if ($file instanceof UploadedFile) {
                     // Ensure it's a valid file
                     $content = file_get_contents($file->getPathname());
                     $mimeType = $file->getMimeType();
-                    $fileId = commonHelper::uploadImage($content, $mimeType);
+                    $fileId = $this->uplaodFileToDrive($content, $mimeType, $fileName, $existingFileName);
                 }
-            }
-            $checkData = '';
-            $checkData = new Portfolio;
-            if ($inputs['portfolio_number']) {
-                $checkData = $entityManagerInterface->getRepository(Portfolio::class)->findOneBy(['user_id' => $this->getUser()->getId(), 'id' => $inputs['portfolio_number']]);
             }
             $checkData->setHeading($inputs['heading']);
             $checkData->setUserId($this->getUser()->getId());

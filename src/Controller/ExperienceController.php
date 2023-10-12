@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ExperienceController extends AbstractController
+class ExperienceController extends GlobalController
 {
     #[Route('/administrator/experience', name: 'app_experience')]
     public function index(EntityManagerInterface $entityManagerInterface): Response

@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class LandingController extends AbstractController
+class LandingController extends GlobalController
 {
     #[Route('/administrator/landing', name: 'app_landing')]
     public function index(Request $request, EntityManagerInterface $enitityManager): Response

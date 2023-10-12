@@ -2,7 +2,7 @@
 <html lang="en">
 
 	{% include 'backend/layout/head.html.twig' %}
-	
+
 	<body>
 		<!--  Body Wrapper -->
 		<div
@@ -15,10 +15,20 @@
 				class="body-wrapper"> <!--  Header Start -->
 				{% include 'backend/layout/header.html.twig' %}
 				<!--  Header End -->
-				<div class="container-fluid"> {% block content %}{% endblock %}
+				<div class="container-fluid">
+					{% if app.session.get('isGoogleAuth')==0 %}
+						<div class="alert alert-danger" role="alert">
+							You Need to Connect Google Drive to use application.
+							<a href="javascript:;" style="text-decoration:none;" class="text-danger">
+								<b>Connect Now!</b>
+								<a></div>
+							{% endif %}
+							{% block content %}{% endblock %}
+						</div>
 					</div>
 				</div>
-			</div>
-		</body>
+			</body>
 
-	</html>
+		</html>
+	</body>
+</html>
