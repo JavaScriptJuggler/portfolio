@@ -1,0 +1,43 @@
+{% extends 'backend/layout/base.html.twig' %}
+{% block content %}
+	<div class="row">
+		<div
+			class="col-md-12">
+			{# shpwing flashes from session and adter show it will destroy automatically. #}
+			{% for flashType, messages in app.session.flashBag.all() %}
+				{% for message in messages %}
+					<div class="alert alert-{{ flashType }}">
+						{{ message|raw }}
+					</div>
+				{% endfor %}
+			{% endfor %}
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">About</h5>
+					<p class="card-text">Add About Yourself</p>
+					<form action="{{path('app_admin_about_save')}}" method="POST" enctype="multipart/form-data">
+						<div class="form-group mt-3">
+							<label for="heading" class="form-label">Heading</label>
+							<input type="text" id="heading" name="heading" value="{{data.getHeading()}}" class="form-control">
+						</div>
+						<div class="form-group mt-3">
+							<label for="description" class="form-label">Description</label>
+							<textarea id="description" name="description" rows="5" class="form-control">{{data.getDescription()}}</textarea>
+						</div>
+						<div class="form-group mt-3">
+							<label for="image" class="form-label">Image</label>
+							<input type="file" name="image" id="image" class="form-control">
+						</div>
+						<div class="form-group mt-3">
+							<label for="signature" class="form-label">Signature</label>
+							<input type="file" name="signature" id="signature" class="form-control">
+						</div>
+						<div class="form-group mt-3 text-center">
+							<button class="btn btn-primary" type="submit">Save Changes</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

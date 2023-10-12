@@ -104,6 +104,7 @@ class ProfileController extends GlobalController
         } catch (\Throwable $th) {
             $success = false;
         }
+        /* if we set flash it will automatically store to session and can access in template like i did */
         if ($success)
             $this->addFlash('success', 'Resume Upoaded & Saved Successfully');
         else
