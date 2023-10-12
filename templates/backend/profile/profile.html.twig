@@ -19,6 +19,9 @@
 						<li class="nav-item" role="presentation">
 							<button class="nav-link" id="pills-password-tab" data-bs-toggle="pill" data-bs-target="#pills-password" type="button" role="tab" aria-controls="pills-password" aria-selected="false">Password</button>
 						</li>
+						<li class="nav-item" role="presentation">
+							<button class="nav-link" id="pills-resumeupload-tab" data-bs-toggle="pill" data-bs-target="#pills-resume-upload" type="button" role="tab" aria-controls="pills-resume-upload" aria-selected="false">Resume</button>
+						</li>
 					</ul>
 					<div class="tab-content" id="pills-tabContent">
 						<div class="tab-pane fade show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
@@ -62,6 +65,17 @@
 								<button type="submit" class="btn btn-primary">Update Password</button>
 							</div>
 							{{ form_end(passwordChangeForm) }}
+						</div>
+						<div class="tab-pane fade" id="pills-resume-upload" role="tabpanel" aria-labelledby="pills-resumeupload-tab" tabindex="0">
+							<form action="/administrator/upload-resume" method="POST" enctype="multipart/form-data">
+								<div class="form-group">
+									<label for="resume" class="form-label">Upload Resume PDF</label>
+									<input type="file" name="resume" id="resume" class="form-control">
+								</div>
+								<div class="text-center mt-3">
+									<button class="btn btn-primary" type="submit">Upload/Change Resume</button>
+								</div>
+							</form>
 						</div>
 					</div>
 				</div>

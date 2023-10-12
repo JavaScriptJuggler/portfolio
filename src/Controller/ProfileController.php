@@ -65,7 +65,6 @@ class ProfileController extends GlobalController
         if ($file) {
             if ($file instanceof UploadedFile) {
                 // Ensure it's a valid file
-
                 $content = file_get_contents($file->getPathname());
                 $mimeType = $file->getMimeType();
                 $fileId = $this->uplaodFileToDrive($content, $mimeType, $fileName, $this->getUser()->getImage() ?? '');
@@ -79,6 +78,36 @@ class ProfileController extends GlobalController
         $this->entityManager->persist($user);
         $this->entityManager->flush();
         // return $this->redirect($this->generateUrl('app_profile'));
+        return $this->redirectToRoute('app_profile');
+    }
+
+    /* uplaod resume pdf */
+    #[Route('/administrator/upload-resume', name: 'app_save_resume', methods: 'POST')]
+    public function uplaodResumePdf(Request $request, EntityManagerInterface $entityManagerInterface)
+    {
+        $checkIfDataExist = $entityManagerInterface->getRepository(User::class)->findOneBy(['id' => $this->getUser()->getId()]);
+        $file = $request->files->get('resume');
+
+        $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+        $fileId = '';
+        if ($file instanceof UploadedFile) {
+            // Ensure it's a valid file
+            $content = file_get_contents($file->getPathname());
+            $mimeType = $file->getMimeType();
+            $fileId = $this->uplaodFileToDrive($content, $mimeType, $fileName, $this->getUser()->getResume() ?? '');
+        }
+        $checkIfDataExist->setResume($fileId);
+        $entityManagerInterface->persist($checkIfDataExist);
+        try {
+            $entityManagerInterface->flush();
+            $success = true;
+        } catch (\Throwable $th) {
+            $success = false;
+        }
+        if ($success)
+            $this->addFlash('success', 'Resume Upoaded & Saved Successfully');
+        else
+            $this->addFlash('danger', 'Something Went Wrong');
         return $this->redirectToRoute('app_profile');
     }
 }
