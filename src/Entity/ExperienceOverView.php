@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ExperienceOverViewRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ExperienceOverViewRepository::class)]
@@ -24,6 +25,9 @@ class ExperienceOverView
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $total_projects = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $total_experience = null;
 
     public function getId(): ?int
     {
@@ -74,6 +78,18 @@ class ExperienceOverView
     public function setTotalProjects(?string $total_projects): static
     {
         $this->total_projects = $total_projects;
+
+        return $this;
+    }
+
+    public function getTotalExperience(): ?string
+    {
+        return $this->total_experience;
+    }
+
+    public function setTotalExperience(?string $total_experience): static
+    {
+        $this->total_experience = $total_experience;
 
         return $this;
     }

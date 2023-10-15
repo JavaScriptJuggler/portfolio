@@ -26,15 +26,11 @@
 	<div class="row  justify-content-center align-items-center">
 		<div class="col-md-6">
 			<div class="me-4" data-aos="fade-right" data-aos-duration="1500">
-				<h2>A Global network of Talent That changeing the way Of creative</h2>
+				<h2>{{global_var.getPhrase()['phrase']}}</h2>
 			</div>
 		</div>
 		<div class=" col-md-6" data-aos="fade-left" data-aos-duration="1500">
-			<p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Males
-																												          a est sagittis et nulla leo ut nulla aliquam. Nisi, fermentum venentis enim vel suspend wergisse eu magnis
-																												          libero orci. Malesuada tortor aliquam malesuada vitae, ullamcorper nisl eget gravda et. Vivmus arcu laoreet
-																												          gravida purus cras. Et laoreet sit feugiat vehicula dufzi,
-																												          ermentum venentis enim vel suspend wergisse eu magnis libe orci.</p>
+			<p class="mb-0">{{global_var.getPhrase()['description']}}</p>
 		</div>
 	</div>
 </div></section><!--================== Section End ==================--><!--================== Service Section Start ==================--><section class="services section">
@@ -53,48 +49,22 @@
 		</div>
 	</div>
 	<div class="row g-4 justify-content-center">
-		<div class="col-lg-4 col-md-6 card-item">
-			<div class="card text-center  border-0 bg-white radius shadow px-3 py-5" data-aos="fade-right" data-aos-duration="1500">
-				<div class="card-icon mb-3">
-					<i class="fas fa-cloud "></i>
-				</div>
-				<div class="card-body">
-					<h4 class="card-title">Research And Design</h4>
-					<p class="card-text small">Lorem ipsum dolor amet, consesd ctetur adipiscing elit. Malesa est sagittis et
-																																										              nuasslla ntis enim vel suspend wergisse eu masgnis suada vitae, ullamchper nisl eget gravda.</p>
-					<a href="portfolio-single.html" class="text-primary card-link mb-0 small">View Details<i class="fas fa-arrow-right ms-2"></i>
-					</a>
-				</div>
-			</div>
-		</div>
-		<div class="col-lg-4 col-md-6 card-item">
-			<div class="card text-center  border-0 bg-white radius shadow px-3 py-5">
-				<div class="card-icon  mb-3">
-					<i class="far fa-lightbulb "></i>
-				</div>
-				<div class="card-body">
-					<h4 class="card-title">User Interface Design</h4>
-					<p class="card-text small">Lorem ipsum dolor amet, consesd ctetur adipiscing elit. Malesa est sagittis et
-																																										              nuasslla ntis enim vel suspend wergisse eu masgnis suada vitae, ullamchper nisl eget gravda.</p>
-					<a href="#" class="text-primary card-link mb-0 small">View Details<i class="fas fa-arrow-right ms-2"></i>
-					</a>
+		{% for service in global_var.getServices() %}
+			<div class="col-lg-4 col-md-6 card-item">
+				<div class="card text-center  border-0 bg-white radius shadow px-3 py-5" data-aos="fade-right" data-aos-duration="1500">
+					<div class="card-icon mb-3">
+						<i class="fas {{service.getIcon()}}"></i>
+					</div>
+					<div class="card-body">
+						<h4 class="card-title">{{service.getServiceName()}}</h4>
+						<p class="card-text small">{{service.getServiceDescription()}}
+							nuasslla ntis enim vel suspend wergisse eu masgnis suada vitae, ullamchper nisl eget gravda.</p>
+						<a href="javascript:;" class="text-primary card-link mb-0 small">View Details<i class="fas fa-arrow-right ms-2"></i>
+						</a>
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="col-lg-4 col-md-6 card-item">
-			<div class="card text-center  border-0 bg-white radius shadow px-3 py-5" data-aos="fade-left" data-aos-duration="1500">
-				<div class="card-icon mb-3">
-					<i class="fas fa-suitcase-rolling "></i>
-				</div>
-				<div class="card-body">
-					<h4 class="card-title">User Experience Design</h4>
-					<p class="card-text small">Lorem ipsum dolor amet, consesd ctetur adipiscing elit. Malesa est sagittis et
-																																										              nuasslla ntis enim vel suspend wergisse eu masgnis suada vitae, ullamchper nisl eget gravda.</p>
-					<a href="#" class="text-primary card-link mb-0 small">View Details<i class="fas fa-arrow-right ms-2"></i>
-					</a>
-				</div>
-			</div>
-		</div>
+		{% endfor %}
 	</div>
 </div></section><!--================== Service Section End ==================--><!--================== Experience Section Start ==================--><section class="experience section">
 <div class="container">
@@ -110,47 +80,38 @@
 					</strong>
 				</h2>
 			</div>
-			<p>Lorem ipsum dolor sit amet, conse asdsd ctetur adipiscing elit. Malesa est
-																												          sagittis et nualla leo ut nulla
-																												          aliquam. Nisi, fermetum suspend vene ntis enim vel sussrf bedspend</p>
+			<p>{{global_var.experience()['experienceOverView'].getExperienceDescription()}}
+				sagittis et nualla leo ut nulla
+																																																				          aliquam. Nisi, fermetum suspend vene ntis enim vel sussrf bedspend</p>
 			<div class="d-sm-flex justify-content-center mb-5 mb-lg-0 border-top pt-4 mt-4">
 				<div class="bg-primary me-sm-4 p-3 mb-4 mb-md-0">
-					<span class="text-primary h2">287+</span>
-					<p class="small">Lorem ipsum dolor sit amet, consesd
+					<span class="text-primary h2">{{global_var.experience()['experienceOverView'].getTotalProjects()}}</span>
+					<p class="small">Projects completed with success.
 					</p>
 				</div>
 				<div class="bg-primary me-sm-4 p-3 mb-4 mb-md-0">
-					<span class="text-primary h2">12 years</span>
-					<p class="small">Lorem ipsum dolor siswsst amet, codvsd nssde esd
+					<span class="text-primary h2">{{global_var.experience()['experienceOverView'].getTotalExperience()}}
+						years</span>
+					<p class="small">
+						of extensive experience yielding valuable insights and expertise.
 					</p>
 				</div>
 			</div>
 		</div>
 		<div class="col-lg-6">
-			<div class="mb-5">
-				<p class="text-secondery fw-normal mb-3 h4">Senior Product Designer</p>
-				<h3 class="mb-3 pb-3 border-bottom">Agency Vision Trust</h3>
-				<div class="d-md-flex justify-content-between">
-					<p class="fw-normal">Dec 2018 - Sep 2019</p>
-					<p class=" fw-normal">Thornridge Cir. Shiloh, Hawaii</p>
-				</div>
-			</div>
-			<div class="mb-5">
-				<p class="text-secondery fw-normal mb-3 h4">Lead User experience Designer</p>
-				<h3 class="mb-3 pb-3 border-bottom">Balkan Brothers Ltd.</h3>
-				<div class="d-md-flex justify-content-between">
-					<p class="fw-normal">Dec 2018 - Sep 2019</p>
-					<p class=" fw-normal">Washington. Manchester, Kentucky</p>
-				</div>
-			</div>
-			<div class="mb-5">
-				<p class="text-secondery fw-normal h4 mb-3">user Experience Designer</p>
-				<h3 class="mb-3 pb-3 border-bottom">Grabstar Design House</h3>
-				<div class="d-sm-flex justify-content-between">
-					<p class="fw-normal">Dec 2018 - Sep 2019</p>
-					<p class=" fw-normal">Thoridge. Syracuse, Connecticut</p>
-				</div>
-			</div>
+			{% for item in global_var.experience()['experience'] %}
+				{% if loop.index<=3 %}
+					<div class="mb-5">
+						<p class="text-secondery fw-normal mb-3 h4">{{item.getDesignation()}}</p>
+						<h3 class="mb-3 pb-3 border-bottom">{{item.getOfficeName()}}</h3>
+						<div class="d-md-flex justify-content-between">
+							<p class="fw-normal">{{item.getYears()}}</p>
+							<p class=" fw-normal">{{item.getLocation()}}</p>
+						</div>
+					</div>
+
+				{% endif %}
+			{% endfor %}
 		</div>
 	</div>
 
@@ -176,8 +137,8 @@
 				<div class="col-md-9">
 					<a href="#" class=" d-inline-block h3 mb-3 text-tertiary fw-bold">Hundreds Of Thousands A Still More Glorious Nights Around Art Table</a>
 					<p class="mb-1">Nam ultrices ultrices nec tortor pulvinar fermentum mi. Sociis sit tristi fgfxqsue sagittis, mauris
-																																										                  volutpat estera phasellus. Varius nec orci, quam augue lorem lines pellentesque non id. Tristique amet
-																																										                  volutpat nunc euismod. Mauris felis at</p>
+																																																																														                  volutpat estera phasellus. Varius nec orci, quam augue lorem lines pellentesque non id. Tristique amet
+																																																																														                  volutpat nunc euismod. Mauris felis at</p>
 					<a href="{{path('app_blog_single',{'blog_slug':'blog_slug'})}}" class="text-primary small">Read more
 						<i class="fas fa-arrow-right small ms-2"></i>
 					</a>
@@ -196,8 +157,8 @@
 					<a href="#" class="d-inline-block h3 mb-3 text-tertiary fw-bold">Preserve And Cherish That Pale Blue Dot Are Creatures Of The Cosmos
 					</a>
 					<p class="mb-1">Nam ultrices ultrices nec tortor pulvinar fermentum mi. Sociis sit tristi fgfxqsue sagittis, mauris
-																																										                volutpat estera phasellus. Varius nec orci, quam augue lorem lines pellentesque non id. Tristique amet
-																																										                volutpat nunc euismod. Mauris felis at</p>
+																																																																														                volutpat estera phasellus. Varius nec orci, quam augue lorem lines pellentesque non id. Tristique amet
+																																																																														                volutpat nunc euismod. Mauris felis at</p>
 					<a href="#" class="text-primary small">Read more
 						<i class="fas fa-arrow-right small ms-2"></i>
 					</a>
@@ -215,8 +176,8 @@
 				<div class="col-md-9">
 					<a href="#" class="mb-3 h3 text-tertiary fw-bold">Great Turbulent Clouds Hearts Of The Stars Stirred By Starlight Sky Culture</a>
 					<p class="mb-1">Nam ultrices ultrices nec tortor pulvinar fermentum mi. Sociis sit tristi fgfxqsue sagittis, mauris
-																																										                volutpat estera phasellus. Varius nec orci, quam augue lorem lines pellentesque non id. Tristique amet
-																																										                volutpat nunc euismod. Mauris felis at</p>
+																																																																														                volutpat estera phasellus. Varius nec orci, quam augue lorem lines pellentesque non id. Tristique amet
+																																																																														                volutpat nunc euismod. Mauris felis at</p>
 					<a href="#" class="text-primary small">Read more
 						<i class="fas fa-arrow-right small ms-2"></i>
 					</a>

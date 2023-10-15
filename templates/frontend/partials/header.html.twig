@@ -2,7 +2,8 @@
 	<nav class="navbar navbar-expand-lg">
 		<div class="container">
 			<a class="navbar-brand" href="index.html">
-				<i class="far fa-envelope"></i>hellorick.developer
+				<i class="far fa-envelope"></i>
+				{{global_var.getUserDetails()['email']}}
 			</a>
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				<i class="fas fa-bars"></i>
@@ -21,14 +22,11 @@
 					<li class="nav-item">
 						<a class="nav-link @@portfolio {% if app.request.attributes.get('_route') == 'app_portfolio' %} active {% endif %}" href="{{ path('app_portfolio') }}">Portfolio</a>
 					</li>
-					{# <li class="nav-item">
-										                        <a class="nav-link btn btn-primary p-2" href="your-download-link-here" download>Download</a>
-										                    </li> #}
 				</ul>
-				<form class="d-block text-center" role="search">
+				<a class="d-block text-center" role="search" href="https://drive.google.com/uc?id={{global_var.getUserDetails()['resume']}}" download="Soumya.pdf">
 					<button class="text-capitalize btn btn-outline-primary px-4 py-2">
 						<i class="fa-solid fa-download" style='margin-right: 5px;'></i>Download Resume</button>
-				</form>
+				</a>
 			</div>
 		</div>
 	</nav>

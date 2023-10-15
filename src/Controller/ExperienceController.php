@@ -47,12 +47,14 @@ class ExperienceController extends GlobalController
             $getData->setExperienceHeading($inputs['heading']);
             $getData->setExperienceDescription($inputs['description']);
             $getData->setTotalProjects($inputs['totalProjects']);
+            $getData->setTotalExperience($inputs['totalExperience']);
             $getData->setUserId($this->getUser()->getId());
         } else {
             $getData = new ExperienceOverView();
             $getData->setExperienceHeading($inputs['heading']);
             $getData->setExperienceDescription($inputs['description']);
             $getData->setTotalProjects($inputs['totalProjects']);
+            $getData->setTotalExperience($inputs['totalExperience']);
             $getData->setUserId($this->getUser()->getId());
         }
         $entityManagerInterface->persist($getData);

@@ -7,19 +7,19 @@
 			<div class="row text-center">
 				<div class="col-lg-8 mx-auto">
 					<div class="hero-img mx-auto mb-3 position-relative">
-						<img src="frontend_files/images/banner-img.png" alt="img">
+						<img src="https://drive.google.com/uc?id={{userData[0]['image']}}" alt="img">
 						<span class="shape shape-1"></span>
 						<span class="shape shape-2"></span>
 						<span class="shape shape-3"></span>
 						<span class="shape shape-4"></span>
 					</div>
-					<p class="mb-3 fw-medium fs-4 text-primary">Hello, myself Rick....</p>
-					<h1 class="mb-4">Creating fast website and softwares
-					</h1>
-					<p class="mb-5">Lorem ipsum dolor sit amet, consecttur adipiscing Orci
-																																				          fauff cibus urna, sed senectus iaculis leo condimentum. Maenas nec adipiscing neque, pellentesque in. Metus
-																																				          fusce.</p>
-					<a href="#" class="btn btn-primary btn-lg">Know About Me</a>
+					<p class="mb-3 fw-medium fs-4 text-primary">Hello, myself
+						{{userData[0]['name']| split(' ') | first}}....</p>
+					<h1 class="mb-4">{{userData[0]['title']}}</h1>
+					<p class="mb-5">{{userData[0]['tagline']}}
+						fauff cibus urna, sed senectus iaculis leo condimentum. Maenas nec adipiscing neque, pellentesque in. Metus
+																																																																		          fusce.</p>
+					<a href="{{path('app_about')}}" class="btn btn-primary btn-lg">Know About Me</a>
 				</div>
 			</div>
 		</div>
