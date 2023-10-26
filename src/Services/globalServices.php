@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use App\Entity\Blog;
 use App\Entity\ExperienceOverView;
 use App\Entity\OfficeExperiences;
 use App\Entity\Phrase;
+use App\Entity\Portfolio;
 use App\Entity\Services;
 use App\Entity\User;
 use Doctrine\ORM\EntityManager;
@@ -66,5 +68,31 @@ class globalServices
         $experience['experienceOverView'] = $getExperienceOverview;
         $experience['experience'] = $getExperiences;
         return $experience;
+    }
+
+    /* blog section */
+    public function getBlog()
+    {
+        $connection = $this->entityManagerInterface->getRepository(Blog::class);
+        $experience = $connection->createQueryBuilder('p')
+            ->where('p.user_id = :userId')
+            ->setParameter('userId', 1)
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult();
+        return $experience;
+    }
+
+    /* projects */
+    public function getProjects()
+    {
+        $connection = $this->entityManagerInterface->getRepository(Portfolio::class);
+        $projects = $connection->createQueryBuilder('project')
+            ->where('project.user_id = :userId')
+            ->setParameter('userId', 1)
+            ->setMaxResults(6)
+            ->getQuery()
+            ->getResult();
+        return $projects;
     }
 }

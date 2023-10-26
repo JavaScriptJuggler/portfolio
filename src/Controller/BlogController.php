@@ -83,7 +83,8 @@ class BlogController extends GlobalController
                 $blog->setCategoryName($category_name);
                 $blog->setBlogHeading($inputs['heading']);
                 $blog->setBlogContent($inputs['description']);
-                $blog->setDate(date('d/m/Y'));
+                $blog->setShortDescription($inputs['short_description']);
+                $blog->setDate(date("j M Y"));
                 $blog->setSlug($inputs['slug']);
                 $entityManagerInterface->persist($blog);
                 $entityManagerInterface->flush();
@@ -94,7 +95,8 @@ class BlogController extends GlobalController
                 $blog->setCategoryName($category_name);
                 $blog->setBlogHeading($inputs['heading']);
                 $blog->setBlogContent($inputs['description']);
-                $blog->setDate(date('d/m/Y'));
+                $blog->setShortDescription($inputs['short_description']);
+                $blog->setDate(date("j M Y"));
                 $blog->setSlug($inputs['slug']);
                 $entityManagerInterface->persist($blog);
                 $entityManagerInterface->flush();

@@ -25,6 +25,10 @@
 								<input type="text" required name="heading" id="heading" value="{{blog is defined? blog.getBlogHeading():''}}" class="form-control">
 							</div>
 							<div class="form-group col-md-12 mb-2">
+								<label for="short_description" class="form-label">Short Description</label>
+								<input type="text" required name="short_description" id="short_description" value="{{blog is defined? blog.getShortDescription():''}}" class="form-control">
+							</div>
+							<div class="form-group col-md-12 mb-2">
 								<label for="description" class="form-label">Description</label>
 								<textarea name="description" required id="description" value="" class="form-control" rows="5"></textarea>
 							</div>

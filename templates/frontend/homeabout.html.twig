@@ -82,7 +82,7 @@
 			</div>
 			<p>{{global_var.experience()['experienceOverView'].getExperienceDescription()}}
 				sagittis et nualla leo ut nulla
-																																																				          aliquam. Nisi, fermetum suspend vene ntis enim vel sussrf bedspend</p>
+																																																																																				          aliquam. Nisi, fermetum suspend vene ntis enim vel sussrf bedspend</p>
 			<div class="d-sm-flex justify-content-center mb-5 mb-lg-0 border-top pt-4 mt-4">
 				<div class="bg-primary me-sm-4 p-3 mb-4 mb-md-0">
 					<span class="text-primary h2">{{global_var.experience()['experienceOverView'].getTotalProjects()}}</span>
@@ -133,65 +133,27 @@
 	</div>
 	<div class="row">
 		<div class="col-md-10 mx-auto justify-content-center align-items-center ">
-			<div class="row justify-content-between align-items-center border-bottom blog mb-4 pb-4" data-aos="fade-up" data-aos-duration="1000">
-				<div class="col-md-9">
-					<a href="#" class=" d-inline-block h3 mb-3 text-tertiary fw-bold">Hundreds Of Thousands A Still More Glorious Nights Around Art Table</a>
-					<p class="mb-1">Nam ultrices ultrices nec tortor pulvinar fermentum mi. Sociis sit tristi fgfxqsue sagittis, mauris
-																																																																														                  volutpat estera phasellus. Varius nec orci, quam augue lorem lines pellentesque non id. Tristique amet
-																																																																														                  volutpat nunc euismod. Mauris felis at</p>
-					<a href="{{path('app_blog_single',{'blog_slug':'blog_slug'})}}" class="text-primary small">Read more
-						<i class="fas fa-arrow-right small ms-2"></i>
-					</a>
-				</div>
-				<div class="col-md-2">
-					<div class="blog-date">
-						<h5>Nov 28, 2019
-							<span class="text-primary d-inline-block">Parenting
-							</span>
-						</h5>
+			{% for item in global_var.getBlog() %}
+				<div class="row justify-content-between align-items-center border-bottom blog mb-4 pb-4" data-aos="fade-up" data-aos-duration="1000">
+					<div class="col-md-9">
+						<a href="#" class=" d-inline-block h3 mb-3 text-tertiary fw-bold">{{item.getBlogHeading()}}</a>
+						<p class="mb-1">{{item.getShortDescription()}}
+							volutpat estera phasellus. Varius nec orci, quam augue lorem lines pellentesque non id. Tristique amet
+																																																																																																																																					                  volutpat nunc euismod. Mauris felis at</p>
+						<a href="{{path('app_blog_single',{'blog_slug':item.getSlug()})}}" class="text-primary small">Read more
+							<i class="fas fa-arrow-right small ms-2"></i>
+						</a>
+					</div>
+					<div class="col-md-2">
+						<div class="blog-date">
+							<h5>{{ item.getDate() }}
+								<span class="text-primary d-inline-block">{{item.getCategoryName()}}
+								</span>
+							</h5>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="row justify-content-between align-items-center border-bottom blog mb-4 pb-4" data-aos="fade-up" data-aos-duration="2000">
-				<div class="col-md-9">
-					<a href="#" class="d-inline-block h3 mb-3 text-tertiary fw-bold">Preserve And Cherish That Pale Blue Dot Are Creatures Of The Cosmos
-					</a>
-					<p class="mb-1">Nam ultrices ultrices nec tortor pulvinar fermentum mi. Sociis sit tristi fgfxqsue sagittis, mauris
-																																																																														                volutpat estera phasellus. Varius nec orci, quam augue lorem lines pellentesque non id. Tristique amet
-																																																																														                volutpat nunc euismod. Mauris felis at</p>
-					<a href="#" class="text-primary small">Read more
-						<i class="fas fa-arrow-right small ms-2"></i>
-					</a>
-				</div>
-				<div class="col-md-2">
-					<div class="blog-date">
-						<h5>Nov 28, 2019
-							<span class="text-primary d-inline-block">Parenting
-							</span>
-						</h5>
-					</div>
-				</div>
-			</div>
-			<div class="row justify-content-between align-items-center border-bottom blog mb-4 pb-4" data-aos="fade-up" data-aos-duration="3000">
-				<div class="col-md-9">
-					<a href="#" class="mb-3 h3 text-tertiary fw-bold">Great Turbulent Clouds Hearts Of The Stars Stirred By Starlight Sky Culture</a>
-					<p class="mb-1">Nam ultrices ultrices nec tortor pulvinar fermentum mi. Sociis sit tristi fgfxqsue sagittis, mauris
-																																																																														                volutpat estera phasellus. Varius nec orci, quam augue lorem lines pellentesque non id. Tristique amet
-																																																																														                volutpat nunc euismod. Mauris felis at</p>
-					<a href="#" class="text-primary small">Read more
-						<i class="fas fa-arrow-right small ms-2"></i>
-					</a>
-
-				</div>
-				<div class="col-md-2">
-					<div class="blog-date">
-						<h5>Nov 28, 2019
-							<span class="text-primary d-inline-block">Parenting
-							</span>
-						</h5>
-					</div>
-				</div>
-			</div>
+			{% endfor %}
 		</div>
 	</div>
 </div></section><!--================== Blog-post Section End ==================--><!--================== Project Section Start ==================--><section class="projects section pt-0">
@@ -213,66 +175,22 @@
 		</div>
 	</div>
 	<div class="row g-4 g-md-5 ">
-		<div class="col-md-6 image-item">
-			<div class="card rounded-0 border-0" data-aos="fade-up" data-aos-duration="1500">
-				<img class="img-fluid" src="frontend_files/images/project-img.png" alt="img">
-				<div class="card-img-overlay">
-					<div class="card-body">
-						<a href="portfolio-single.html" class="h4 text-white">
-							Drinking from the sea of knowledge</a>
-						<ul class="meta-list list-unstyled d-flex">
-							<li class="list-inline-item text-white fw-normal">Digital</li>
-							<li class="list-inline-item text-white fw-normal">Exhibition</li>
-						</ul>
+		{% for item in global_var.getProjects() %}
+			<div class="col-md-4 image-item">
+				<div class="card rounded-0 border-0" data-aos="fade-up" data-aos-duration="1500">
+					<img class="img-fluid" src="https://drive.google.com/uc?id={{item.getImage}}" alt="img">
+					<div class="card-img-overlay">
+						<div class="card-body">
+							<a href="portfolio-single.html" class="h4 text-white">{{item.getHeading}}</a>
+							<ul class="meta-list list-unstyled d-flex">
+								<li class="list-inline-item text-white fw-normal">{{item.getTechnology}}</li>
+								<li class="list-inline-item text-white fw-normal">{{item.getCategory}}</li>
+							</ul>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="col-md-6 image-item">
-			<div class="card rounded-0 border-0" data-aos="fade-up" data-aos-duration="1500">
-				<img class="img-fluid" src="frontend_files/images/project-img-one.png" alt="img">
-				<div class="card-img-overlay">
-					<div class="card-body">
-						<a href="portfolio-single.html" class="h4 text-white ">A Feast Of A Time-Honored History</a>
-						<ul class="meta-list list-unstyled d-flex">
-							<li class="list-inline-item text-white fw-normal">Digital</li>
-							<li class="list-inline-item text-white fw-normal">Branding</li>
-						</ul>
-					</div>
-				</div>
-
-			</div>
-		</div>
-		<div class="col-md-6 image-item">
-			<div class="card rounded-0 border-0" data-aos="fade-up" data-aos-duration="2000">
-				<img class="img-fluid" src="frontend_files/images/project-img-two.png" alt="img">
-				<div class="card-img-overlay">
-					<div class="card-body">
-						<a href="portfolio-single.html" class="h4 text-white ">Google Play ACG Interactive Game</a>
-						<ul class="meta-list list-unstyled d-flex">
-							<li class="list-inline-item text-white fw-normal">Digital</li>
-							<li class="list-inline-item text-white fw-normal">Events</li>
-						</ul>
-					</div>
-				</div>
-
-			</div>
-		</div>
-		<div class="col-md-6 image-item">
-			<div class="card rounded-0 border-0" data-aos="fade-up" data-aos-duration="2000">
-				<img class="img-fluid" src="frontend_files/images/project-img-three.png" alt="img">
-				<div class="card-img-overlay">
-					<div class="card-body">
-						<a href="portfolio-single.html" class="h4 text-white ">Monopoly Dreams Hong Kong</a>
-						<ul class="meta-list list-unstyled d-flex">
-							<li class="list-inline-item text-white fw-normal">Digital</li>
-							<li class="list-inline-item text-white fw-normal">Marketing</li>
-						</ul>
-					</div>
-				</div>
-
-			</div>
-		</div>
+		{% endfor %}
 		<div class="col-12 mx-auto text-center">
 			<a href="portfolio.html" class="btn btn-outline-primary text-capitailize fw-medium py-2">view all</a>
 		</div>
