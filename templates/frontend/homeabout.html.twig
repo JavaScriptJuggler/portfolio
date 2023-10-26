@@ -181,7 +181,7 @@
 					<img class="img-fluid" src="https://drive.google.com/uc?id={{item.getImage}}" alt="img">
 					<div class="card-img-overlay">
 						<div class="card-body">
-							<a href="portfolio-single.html" class="h4 text-white">{{item.getHeading}}</a>
+							<a href="{{path('app_portfolio_single',{"slug":item.getslug})}}" class="h4 text-white">{{item.getHeading}}</a>
 							<ul class="meta-list list-unstyled d-flex">
 								<li class="list-inline-item text-white fw-normal">{{item.getTechnology}}</li>
 								<li class="list-inline-item text-white fw-normal">{{item.getCategory}}</li>
@@ -192,7 +192,7 @@
 			</div>
 		{% endfor %}
 		<div class="col-12 mx-auto text-center">
-			<a href="portfolio.html" class="btn btn-outline-primary text-capitailize fw-medium py-2">view all</a>
+			<a href="{{path('app_portfolio')}}" class="btn btn-outline-primary text-capitailize fw-medium py-2">view all</a>
 		</div>
 	</div>
 </div></div></section><!--================== Project Section End ==================-->{% endblock %}

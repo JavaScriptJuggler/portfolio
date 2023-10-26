@@ -25,10 +25,12 @@ class PortfolioController extends GlobalController
     }
 
     #[Route('/portfolio/{slug}', name: 'app_portfolio_single')]
-    public function singlePortfolio($slug): Response
+    public function singlePortfolio($slug, EntityManagerInterface $entityManagerInterface): Response
     {
+        $portfolioDetails = $entityManagerInterface->getRepository(Portfolio::class)->findOneBy(['user_id' => 1, 'slug' => $slug]);
         return $this->render('frontend/portfolio/portfolio_single.html.twig', [
             'page_title' => $slug,
+            "portfolio" => $portfolioDetails,
         ]);
     }
 

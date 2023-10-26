@@ -21,10 +21,12 @@ class BlogController extends GlobalController
     }
 
     #[Route('/blog/{blog_slug}', name: 'app_blog_single')]
-    public function singlBlog($blog_slug): Response
+    public function singlBlog($blog_slug, EntityManagerInterface $entityManagerInterface): Response
     {
+        $blogData = $entityManagerInterface->getRepository(Blog::class)->findOneBy(['user_id' => 1, 'slug' => $blog_slug]);
         return $this->render('frontend/blog/blog_single.html.twig', [
             'page_title' => $blog_slug,
+            'blog' => $blogData,
         ]);
     }
 

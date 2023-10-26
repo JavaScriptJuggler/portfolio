@@ -13,10 +13,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class AboutController extends GlobalController
 {
     #[Route('/about', name: 'app_about')]
-    public function index(): Response
+    public function index(EntityManagerInterface $entityManagerInterface): Response
     {
+        $about = $entityManagerInterface->getRepository(About::class)->findOneBy(['user_id' => 1]);
         return $this->render('frontend/about/index.html.twig', [
             'page_title' => 'About',
+            "about" => $about,
         ]);
     }
 
