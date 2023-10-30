@@ -35,15 +35,18 @@
 					{% endfor %}
 				</div>
 				<div class="col-lg-4 col-xl-3 offset-xl-1">
-					<div class="widget mb-5">
+					<div class="widget mb-5" id="newsletter-div">
 						<h3 class="h4 mb-3">Newsletter</h4>
 						<form id="newsletter">
-							<input type="text" class="form-control mb-3 rounded-0" placeholder="Enter email" aria-label="Enter email" id="newsletter_email">
+							<input type="email" required class="form-control mb-3 rounded-0" placeholder="Enter email" aria-label="Enter email" id="newsletter_email">
 							<div class="d-grid mb-3">
-								<button type="submit" class="btn btn-primary rounded-0">Subscribe</button>
+								<button type="submit" class="btn btn-primary rounded-0" id="subscribe_btn">Subscribe</button>
 							</div>
 						</form>
-						<p class="form-text">Get special offers on the latest developments from Front.</p>
+						<p class="text-success text-sm subscribe-text" style="display:none">
+							<b>Thanks For Subscribe!</b>
+						</p>
+						<p class="form-text">Please subscribe for getting latest blog posts</p>
 					</div>
 
 					<div class="widget mb-5">
@@ -113,21 +116,26 @@
 		</div>
 	</div>
 </section>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-<script>
-	$('#newsletter').submit(function (e) { 
-    e.preventDefault();
-    $.ajax({
-        type: "POST",
-        url: "{{ path('app_blog_subscriber') }}",
-        data: {
-            "email": $('#newsletter_email').val()
-        },
-        success: function (response) {
-            console.log(response);
-        }
-    });
-});
-
-	</script>
-<!--================== Blog Section End ==================-->{% endblock %} 
+ <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> <script>
+				$('#newsletter').submit(function (e) { 
+			    e.preventDefault();
+				$('#subscribe_btn').text("Wait...");	
+			    $.ajax({
+			        type: "POST",
+			        url: "{{ path('app_blog_subscriber') }}",
+			        data: {
+			            "email": $('#newsletter_email').val()
+			        },
+			        success: function (response) {
+						$('.subscribe-text').fadeIn();
+						$('#subscribe_btn').text("Subscribe");		
+						setTimeout(() => {
+							$('.subscribe-text').hide();
+							$('#newsletter').trigger('reset');		
+						}, 5000);
+			        }
+			    });
+			});
+			
+				</script>
+<!--================== Blog Section End ==================-->{% endblock %}

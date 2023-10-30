@@ -170,7 +170,7 @@ class BlogController extends GlobalController
         /* sending mail */
         $email = (new TemplatedEmail())
             ->from('soumyamanna180898@gmail.com')
-            ->to('soumyamanna180898@gmail.com')
+            ->to($email)
             ->subject("Thank's for SUBSCRIBING")
             ->htmlTemplate('frontend\mail_templates\subscribe_template.html.twig') // Template path
             ->context([]); // variables wants to pass
