@@ -38,6 +38,9 @@ class Blog
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $short_description = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $image = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -135,6 +138,18 @@ class Blog
     public function setShortDescription(?string $short_description): static
     {
         $this->short_description = $short_description;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
 
         return $this;
     }

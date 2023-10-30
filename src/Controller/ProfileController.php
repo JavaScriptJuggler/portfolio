@@ -60,9 +60,9 @@ class ProfileController extends GlobalController
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
         $requests = $request->request;
         $file = $request->files->get('image');
-        $fileName = md5(uniqid()) . '.' . $file->guessExtension();
         $fileId = '';
         if ($file) {
+            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
             if ($file instanceof UploadedFile) {
                 // Ensure it's a valid file
                 $content = file_get_contents($file->getPathname());
@@ -87,14 +87,15 @@ class ProfileController extends GlobalController
     {
         $checkIfDataExist = $entityManagerInterface->getRepository(User::class)->findOneBy(['id' => $this->getUser()->getId()]);
         $file = $request->files->get('resume');
-
-        $fileName = md5(uniqid()) . '.' . $file->guessExtension();
         $fileId = '';
-        if ($file instanceof UploadedFile) {
-            // Ensure it's a valid file
-            $content = file_get_contents($file->getPathname());
-            $mimeType = $file->getMimeType();
-            $fileId = $this->uplaodFileToDrive($content, $mimeType, $fileName, $this->getUser()->getResume() ?? '');
+        if ($file) {
+            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+            if ($file instanceof UploadedFile) {
+                // Ensure it's a valid file
+                $content = file_get_contents($file->getPathname());
+                $mimeType = $file->getMimeType();
+                $fileId = $this->uplaodFileToDrive($content, $mimeType, $fileName, $this->getUser()->getResume() ?? '');
+            }
         }
         $checkIfDataExist->setResume($fileId);
         $entityManagerInterface->persist($checkIfDataExist);

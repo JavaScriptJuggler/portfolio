@@ -17,7 +17,7 @@
 				<div class="card-body">
 					<h5 class="card-title">Blog</h5>
 					<p class="card-text">Add Blog to show on the portfolio website</p>
-					<form action="/administrator/save-blog" method="POST" name="blog_adder" id="blog_adder">
+					<form action="/administrator/save-blog" method="POST" name="blog_adder" id="blog_adder" enctype="multipart/form-data">
 						<div class="row">
 							<input type="hidden" name="blog_number" value='{{blog is defined ? blog.getId():""}}'>
 							<div class="form-group col-md-12 mb-2">
@@ -44,6 +44,10 @@
 							<div class="form-group col-md-12">
 								<label for="" class="form-label">slug</label>
 								<input type="text" name="slug" required id="slug" value='{{blog is defined? blog.getSlug():''}}' class="form-control">
+							</div>
+							<div class="form-group col-md-12">
+								<label for="" class="form-label">Image</label>
+								<input type="file" name="image" id="image" class="form-control">
 							</div>
 						</div>
 						<div class="col-md-12 text-end mt-3">

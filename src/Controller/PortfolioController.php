@@ -65,9 +65,7 @@ class PortfolioController extends GlobalController
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
         if ($request->request) {
             $inputs = $request->request->all();
-
             $file = $request->files->get('image');
-            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
             $fileId = $checkData = $existingFileName = '';
             $checkData = new Portfolio;
             if ($inputs['portfolio_number']) {
@@ -75,6 +73,7 @@ class PortfolioController extends GlobalController
                 $existingFileName = $checkData->getImage();
             }
             if ($file) {
+                $fileName = md5(uniqid()) . '.' . $file->guessExtension();
                 if ($file instanceof UploadedFile) {
                     // Ensure it's a valid file
                     $content = file_get_contents($file->getPathname());

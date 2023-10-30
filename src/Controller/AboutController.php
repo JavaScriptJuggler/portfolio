@@ -39,12 +39,11 @@ class AboutController extends GlobalController
         $checkData = $entityManagerInterface->getRepository(About::class)->findOneBy(['user_id' => $this->getUser()->getId()]);
         if (!$checkData)
             $checkData = new About;
+        $imageFileId = $signatureFileId = $imageFile = $signatureFile = '';
         $imageFile = $request->files->get('image');
         $signatureFile = $request->files->get('signature');
-        $imageFileName = md5(uniqid()) . '.' . $imageFile->guessExtension();
-        $signatureFileName = md5(uniqid()) . '.' . $signatureFile->guessExtension();
-        $imageFileId = $signatureFileId = '';
         if ($imageFile) {
+            $imageFileName = md5(uniqid()) . '.' . $imageFile->guessExtension();
             if ($imageFile instanceof UploadedFile) {
                 // Ensure it's a valid file
                 $content = file_get_contents($imageFile->getPathname());
@@ -54,6 +53,7 @@ class AboutController extends GlobalController
             }
         }
         if ($signatureFile) {
+            $signatureFileName = md5(uniqid()) . '.' . $signatureFile->guessExtension();
             if ($signatureFile instanceof UploadedFile) {
                 // Ensure it's a valid file
                 $content = file_get_contents($signatureFile->getPathname());
